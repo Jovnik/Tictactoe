@@ -1,0 +1,5 @@
+export const SWAP_PLAYER = 'SWAP_PLAYER';
+export const UPDATE_BOARD = 'UPDATE_BOARD';
+export const DETERMINE_WINNER = 'DETERMINE_WINNER';
+export const RESET_GAME = 'RESET_GAME';
+export const CHANGE_GAME_STATE = 'CHANGE_GAME_STATE';

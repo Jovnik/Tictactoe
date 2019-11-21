@@ -1,22 +1,100 @@
-.App {
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  /* background: #333; */
+  background: #808080;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin: 1rem;
+  /* color: #eaeaea; */
+  color: black;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.square {
+  background: #333;
+  color: #eaeaea;
+  border: 1px solid #999;
+  float: left;
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
   text-align: center;
+  height: 100px;
+  width: 100px;
 }
 
-.App-logo {
-  height: 40vmin;
+.play-again {
+  margin: 2rem;
+  background-color: #222;
+  padding: 1rem 2rem;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.prev-move {
+  border: 1px solid black;
+  /* margin: 1rem; */
+  /* background-color: #222; */
+  color: black;
+  cursor: pointer;
+}
+
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid orange;
+}
+
+.game-info {
+  /* margin-left: 20px; */
+  border: 1px solid pink;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-board {
+  margin-top: 5rem;
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #09d3ac;
+.scoreboard {
+  /* border: 1px solid red;  */
+  margin-left: 2rem;
+  padding: 0.5rem 1rem;
 }
