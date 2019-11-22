@@ -6,11 +6,13 @@ import GameContext from '../context/game/gameContext';
 const Board = () => {
     const gameContext = useContext(GameContext);
 
-    const { player, winner } = gameContext;
+    const { player, winner, squares } = gameContext;
 
     const renderSquare = (i) => {
         return <Square squareNumber={i} />
     }
+
+    // console.log('//// this is the squares value', squares);
 
     return (
         <div>

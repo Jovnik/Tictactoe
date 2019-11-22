@@ -59,6 +59,10 @@ ol, ul {
   cursor: pointer;
 }
 
+.thick-border {
+  border-bottom: 30px solid red;
+}
+
 
 .square:focus {
   outline: none;

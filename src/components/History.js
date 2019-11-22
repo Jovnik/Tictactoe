@@ -7,7 +7,7 @@ const History = () => {
 
     const gameContext = useContext(GameContext);
 
-    const { history } = gameContext;
+    const { history, jumpTo } = gameContext;
 
     const moves = history.map((step, move) => {
         const desc = move ?
@@ -15,7 +15,7 @@ const History = () => {
             'Go to game start';
         return (
             <li key={move}>
-                <button className="prev-move">{desc}</button>
+                <button className="prev-move" onClick={() => jumpTo(move)}>{desc}</button>
             </li>
         );
     });

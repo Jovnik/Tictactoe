@@ -21,6 +21,14 @@ const Square = ({ squareNumber }) => {
         // changeGameState();  //this changes the newGame state back to false 
     }, [newGame])   //this only occurs because the newGame state change is invoked, even though it is the same value??
 
+
+    //if the square has been clicked and it doesnt have a value in it, then set the click state to be false again
+    useEffect(() => {
+        if(clicked && (squares[squareNumber] === null)){
+            setClicked(false);
+        }
+    }, [squares])
+
     
     const onClick = () => {
 
@@ -42,6 +50,7 @@ const Square = ({ squareNumber }) => {
     }
 
     return (
+        // add the relevant classnames here to change the way your grid looks
         <button className="square" onClick={onClick}>
             {squares[squareNumber]}
         </button>

@@ -3,7 +3,8 @@ import {
     UPDATE_BOARD,
     DETERMINE_WINNER,
     RESET_GAME,
-    CHANGE_GAME_STATE
+    CHANGE_GAME_STATE,
+    CHANGE_HISTORY
 } from '../types';
 
 export default (state, action) => {
@@ -31,12 +32,22 @@ export default (state, action) => {
                 player: 'X',
                 squares: Array(9).fill(null),
                 winner: null,
-                newGame: true
+                newGame: true,
+                history: [{squares: Array(9).fill(null)}]
             }
         case CHANGE_GAME_STATE:
             return {
                 ...state,
                 newGame: false
+            }
+        case CHANGE_HISTORY:
+            return {
+                ...state,
+                player: action.payload.newPlayer,
+                squares: action.payload.revertedSquares,
+                stepNumber: action.payload.move,
+                history: action.payload.newHistory
+                // squares: state.history[action.payload + 1]
             }
         default:
             return state;

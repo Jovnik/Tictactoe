@@ -30,12 +30,14 @@ const Game = () => {
 
     return (
         <div className="game">
+            <div className="score-board-area">
+                <Scoreboard />
+            </div>
             <div className="game-board">
                 <Board />
                 { winner && <button className="play-again" onClick={handleClick}>New Game</button> }
             </div>
             <div className="game-info">
-                <Scoreboard />
                 <History />
                 <div>{/* status */}</div>
                 <ol>{/* TODO */}</ol>

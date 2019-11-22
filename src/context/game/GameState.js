@@ -7,7 +7,8 @@ import {
     UPDATE_BOARD,
     DETERMINE_WINNER,
     RESET_GAME,
-    CHANGE_GAME_STATE
+    CHANGE_GAME_STATE,
+    CHANGE_HISTORY
 } from '../types';
 
 const GameState = props => {
@@ -22,7 +23,8 @@ const GameState = props => {
         },
         history: [{
             squares: Array(9).fill(null),
-        }]
+        }],
+        stepNumber: 0
     };
 
     const [state, dispatch] = useReducer(gameReducer, initialState);
@@ -45,8 +47,26 @@ const GameState = props => {
         }
     };
 
-    const updateHistory = () => {
-        
+    const jumpTo = (move) => {
+        console.log('We are jumping to move', move);
+        console.log('Squares', squares);
+        console.log('History', history);
+        console.log('Going to', history[move].squares);
+
+        // set the correct course of history here
+
+        const newPlayer = move%2 === 0 ? 'X' : 'O';
+
+
+        const newHistory = history.slice(0, move+1);
+        console.log('This is the new history', newHistory);
+        // slice to get the new history
+        // const newHistory = history.slice(0, move);
+
+        dispatch({
+            type: CHANGE_HISTORY,
+            payload: { newPlayer, revertedSquares: history[move].squares, move, newHistory }
+        })
     }
 
     const updateInternalBoard = (squareNum) => {
@@ -112,11 +132,13 @@ const GameState = props => {
             newGame: state.newGame,
             wins: state.wins,
             history: state.history,
+            stepNumber: state.stepNumber,
             switchPlayer,
             updateInternalBoard,
             determineWinner,
             resetGame,
-            changeGameState
+            changeGameState,
+            jumpTo
         }}>
             { props.children }
         </GameContext.Provider>
