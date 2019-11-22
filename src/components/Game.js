@@ -39,8 +39,6 @@ const Game = () => {
             </div>
             <div className="game-info">
                 <History />
-                <div>{/* status */}</div>
-                <ol>{/* TODO */}</ol>
             </div>
 
         </div>

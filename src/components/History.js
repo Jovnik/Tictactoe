@@ -21,7 +21,7 @@ const History = () => {
     });
 
     return (
-        <div>
+        <div className="move-history">
             <h2>Move History</h2>
             <ol>{moves}</ol>
 
