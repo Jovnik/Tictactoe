@@ -8,7 +8,8 @@ import {
     DETERMINE_WINNER,
     RESET_GAME,
     CHANGE_GAME_STATE,
-    CHANGE_HISTORY
+    CHANGE_HISTORY,
+    DISABLE_FIRST_TURN
 } from '../types';
 
 const GameState = props => {
@@ -19,32 +20,55 @@ const GameState = props => {
         newGame: false,
         wins: {
             X: 0,
-            O: 0
+            O: 0,
+            draw: 0
         },
         history: [{
             squares: Array(9).fill(null),
         }],
-        stepNumber: 0
+        stepNumber: 0,
+        firstTurn: true,
+        nTurns: 0
     };
 
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
-    const { player, squares, wins, history } = state;
+    const { player, squares, wins, history, newGame, firstTurn, nTurns } = state;
 
     //ACTIONS
 
     const switchPlayer = () => {
-        if(player === 'X'){
-            dispatch({
-                type: SWAP_PLAYER,
-                payload: 'O'
-            })
-        } else {
-            dispatch({
-                type: SWAP_PLAYER,
-                payload: 'X'
-            })
-        }
+        console.log('player has been switched');
+        // if(firstTurn){
+        //     disableFirstTurn();
+        // }
+
+
+        const payload = {};
+        payload.nextPlayer = player === 'X' ? 'O' : 'X';
+
+        let numTurns = nTurns;
+        payload.numTurns = numTurns+=1;
+
+        console.log('the payload is ', payload);
+
+
+        dispatch({
+            type: SWAP_PLAYER,
+            payload,
+            // nTurns: nTurns++
+        })
+        // if(player === 'X'){
+        //     dispatch({
+        //         type: SWAP_PLAYER,
+        //         payload: 'O'
+        //     })
+        // } else {
+        //     dispatch({
+        //         type: SWAP_PLAYER,
+        //         payload: 'X'
+        //     })
+        // }
     };
 
     const jumpTo = (move) => {
@@ -93,7 +117,14 @@ const GameState = props => {
         })
     }
 
+    const disableFirstTurn = () => {
+        dispatch({
+            type: DISABLE_FIRST_TURN
+        })
+    }
+
     const determineWinner = () => {
+        console.log('we try to determine the winner');
         // console.log(squares);
         const lines = [
             [0, 1, 2],
@@ -106,10 +137,12 @@ const GameState = props => {
             [2, 4, 6],
         ];
 
+        // this checks if there is an actual winner
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
+
+            // this if statement is what determines if there is a winner
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            //   console.log('something happened here!');
               const updatedWins = { ...wins };
               updatedWins[squares[a]]++;
               console.log('The updated win is', updatedWins);
@@ -117,10 +150,18 @@ const GameState = props => {
                   type: DETERMINE_WINNER,
                   payload: { winner: squares[a], updatedWins }
               })
+
+              // this loops gets hit from the very start when everything is null
+            } else if (nTurns === 9 && !squares.every(e => e === null)){
+                console.log('We enter the draw loop')
+                const updatedWins = { ...wins };
+                updatedWins.draw++;
+                dispatch({
+                    type: DETERMINE_WINNER,
+                    payload: { winner: 'draw', updatedWins }
+                })
             }
         }
-        // return null;    //dont think i even need this
-
     }
 
     return (
@@ -133,12 +174,15 @@ const GameState = props => {
             wins: state.wins,
             history: state.history,
             stepNumber: state.stepNumber,
+            firstTurn: state.firstTurn,
+            nTurns: state.nTurns,
             switchPlayer,
             updateInternalBoard,
             determineWinner,
             resetGame,
             changeGameState,
-            jumpTo
+            jumpTo,
+            disableFirstTurn
         }}>
             { props.children }
         </GameContext.Provider>

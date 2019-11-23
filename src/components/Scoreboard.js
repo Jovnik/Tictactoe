@@ -12,6 +12,7 @@ const Scoreboard = () => {
             <h2 style={{ textDecoration: 'underline' }}>Scoreboard</h2>
             <h3>X: {wins.X}</h3>
             <h3>O: {wins.O}</h3>
+            <h3>Draw: {wins.draw}</h3>
         </div>
     )
 }

@@ -9,20 +9,23 @@ const Game = () => {
 
     const gameContext = useContext(GameContext);
 
-    const { player, determineWinner, winner, resetGame, newGame, changeGameState } = gameContext; 
+    const { player, determineWinner, winner, resetGame, newGame, changeGameState, nTurns } = gameContext; 
 
     // after a game is reset, the newGame state becomes true, so we must set it back to false again
     useEffect(() => {
         if(newGame){
+            console.log('herefirst?')
             changeGameState();
             // console.log('We change newGame back to false here')
         }
     }, [newGame])
 
     // determine the winner every time the player state gets updated
+    // this happens as soon as the app loads 
     useEffect(() => {
+        console.log('number of turns is', nTurns);
         determineWinner();
-    }, [player])
+    }, [player])    
 
     const handleClick = () => {
         resetGame();

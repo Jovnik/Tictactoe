@@ -4,7 +4,8 @@ import {
     DETERMINE_WINNER,
     RESET_GAME,
     CHANGE_GAME_STATE,
-    CHANGE_HISTORY
+    CHANGE_HISTORY,
+    DISABLE_FIRST_TURN
 } from '../types';
 
 export default (state, action) => {
@@ -12,7 +13,8 @@ export default (state, action) => {
         case SWAP_PLAYER:
             return {
                 ...state,
-                player: action.payload
+                player: action.payload.nextPlayer,
+                nTurns: action.payload.numTurns
             }
         case UPDATE_BOARD:
             return {
@@ -33,7 +35,9 @@ export default (state, action) => {
                 squares: Array(9).fill(null),
                 winner: null,
                 newGame: true,
-                history: [{squares: Array(9).fill(null)}]
+                history: [{squares: Array(9).fill(null)}],
+                firstTurn: true,
+                nTurns: 0
             }
         case CHANGE_GAME_STATE:
             return {
@@ -48,6 +52,11 @@ export default (state, action) => {
                 stepNumber: action.payload.move,
                 history: action.payload.newHistory
                 // squares: state.history[action.payload + 1]
+            }
+        case DISABLE_FIRST_TURN:
+            return {
+                ...state,
+                firstTurn: false
             }
         default:
             return state;

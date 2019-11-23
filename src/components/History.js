@@ -22,7 +22,7 @@ const History = () => {
 
     return (
         <div className="move-history">
-            <h2>Move History</h2>
+            <h2 style={{textDecoration: 'underline'}}>Move History</h2>
             <ol>{moves}</ol>
 
         </div>

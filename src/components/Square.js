@@ -6,7 +6,7 @@ import GameContext from '../context/game/gameContext';
 const Square = ({ squareNumber }) => {
     const gameContext = useContext(GameContext);
 
-    const { switchPlayer, updateInternalBoard, winner, squares, newGame, history } = gameContext;
+    const { switchPlayer, updateInternalBoard, winner, squares, newGame, history, disableFirstTurn, firstTurn } = gameContext;
 
     //component level state
     // const [value, setValue] = useState(null);   
@@ -37,12 +37,6 @@ const Square = ({ squareNumber }) => {
         } else if (winner) {
             console.log('A winner has already been declared');  
         } else {
-            // player === 'O' ? setValue('O') : setValue('X');
-
-            // const current = history[history.length - 1];
-            // const nsquares = current.squares.slice();
-            // console.log('The squares to be put in the history', nsquares);
-
             updateInternalBoard(squareNumber);
             switchPlayer();
             setClicked(true);
