@@ -28,64 +28,38 @@ const GameState = props => {
         }],
         stepNumber: 0,
         firstTurn: true,
-        nTurns: 0
+        nTurns: 0,
+        gameFinished: false
     };
 
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
-    const { player, squares, wins, history, newGame, firstTurn, nTurns } = state;
+    // dont need firstTurn and newGame in this file
+    const { player, squares, wins, history, nTurns, gameFinished } = state;
 
     //ACTIONS
 
     const switchPlayer = () => {
-        console.log('player has been switched');
-        // if(firstTurn){
-        //     disableFirstTurn();
-        // }
-
-
         const payload = {};
         payload.nextPlayer = player === 'X' ? 'O' : 'X';
 
         let numTurns = nTurns;
         payload.numTurns = numTurns+=1;
 
-        console.log('the payload is ', payload);
-
-
         dispatch({
             type: SWAP_PLAYER,
             payload,
             // nTurns: nTurns++
         })
-        // if(player === 'X'){
-        //     dispatch({
-        //         type: SWAP_PLAYER,
-        //         payload: 'O'
-        //     })
-        // } else {
-        //     dispatch({
-        //         type: SWAP_PLAYER,
-        //         payload: 'X'
-        //     })
-        // }
+
     };
 
     const jumpTo = (move) => {
-        console.log('We are jumping to move', move);
-        console.log('Squares', squares);
-        console.log('History', history);
-        console.log('Going to', history[move].squares);
-
-        // set the correct course of history here
 
         const newPlayer = move%2 === 0 ? 'X' : 'O';
 
-
         const newHistory = history.slice(0, move+1);
         console.log('This is the new history', newHistory);
-        // slice to get the new history
-        // const newHistory = history.slice(0, move);
 
         dispatch({
             type: CHANGE_HISTORY,
@@ -124,7 +98,7 @@ const GameState = props => {
     }
 
     const determineWinner = () => {
-        console.log('we try to determine the winner');
+        // console.log('we try to determine the winner');
         // console.log(squares);
         const lines = [
             [0, 1, 2],
@@ -152,13 +126,14 @@ const GameState = props => {
               })
 
               // this loops gets hit from the very start when everything is null
-            } else if (nTurns === 9 && !squares.every(e => e === null)){
-                console.log('We enter the draw loop')
+            } else if (!gameFinished && nTurns === 9 && !squares.every(e => e === null)){
+                console.log('We enter the draw loop');
+                console.log('nturns is ', nTurns)
                 const updatedWins = { ...wins };
                 updatedWins.draw++;
                 dispatch({
                     type: DETERMINE_WINNER,
-                    payload: { winner: 'draw', updatedWins }
+                    payload: { winner: 'draw', updatedWins, gameFinished: true }
                 })
             }
         }
@@ -176,6 +151,7 @@ const GameState = props => {
             stepNumber: state.stepNumber,
             firstTurn: state.firstTurn,
             nTurns: state.nTurns,
+            gameFinished: state.gameFinished,
             switchPlayer,
             updateInternalBoard,
             determineWinner,

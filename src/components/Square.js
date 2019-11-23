@@ -6,7 +6,8 @@ import GameContext from '../context/game/gameContext';
 const Square = ({ squareNumber }) => {
     const gameContext = useContext(GameContext);
 
-    const { switchPlayer, updateInternalBoard, winner, squares, newGame, history, disableFirstTurn, firstTurn } = gameContext;
+    // removed history, disableFirstTurn and firstTurn from the destructure 
+    const { switchPlayer, updateInternalBoard, winner, squares, newGame } = gameContext;
 
     //component level state
     // const [value, setValue] = useState(null);   
@@ -27,6 +28,7 @@ const Square = ({ squareNumber }) => {
         if(clicked && (squares[squareNumber] === null)){
             setClicked(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [squares])
 
     
@@ -43,9 +45,10 @@ const Square = ({ squareNumber }) => {
         }
     }
 
+    const classname = "square";
     return (
         // add the relevant classnames here to change the way your grid looks
-        <button className="square" onClick={onClick}>
+        <button className={classname} onClick={onClick}>
             {squares[squareNumber]}
         </button>
     )

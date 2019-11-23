@@ -26,7 +26,8 @@ export default (state, action) => {
             return {
                 ...state,
                 winner: action.payload.winner,
-                wins: action.payload.updatedWins
+                wins: action.payload.updatedWins,
+                gameFinished: true
             }
         case RESET_GAME:
             return {
@@ -37,7 +38,8 @@ export default (state, action) => {
                 newGame: true,
                 history: [{squares: Array(9).fill(null)}],
                 firstTurn: true,
-                nTurns: 0
+                nTurns: 0,
+                gameFinished: false
             }
         case CHANGE_GAME_STATE:
             return {

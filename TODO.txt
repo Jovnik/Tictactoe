@@ -1,6 +1,3 @@
 TicTacToe To Do List:
-- based on the move reverted to, change whos move it is (X or O)
-- say that its a draw and keep that tally in the scoreboard component
-- go to react docs and see how they implement the move history correctly 
-(mine keeps adding moves to the list as you constantly 'go back in time'
 - add more classnames for the relevant squares so that theres only inside borders
+- when i revert move history there should be no winner (set to false) - actually that could be a potential feature?

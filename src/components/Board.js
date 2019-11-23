@@ -6,17 +6,18 @@ import GameContext from '../context/game/gameContext';
 const Board = () => {
     const gameContext = useContext(GameContext);
 
-    const { player, winner, squares } = gameContext;
+    const { player, winner } = gameContext;
 
     const renderSquare = (i) => {
         return <Square squareNumber={i} />
     }
 
-    // console.log('//// this is the squares value', squares);
-
     return (
         <div>
-            { winner ? <div className="status">The winner is {winner}!</div> : <div className="status">Next Player: {player}</div> }
+            { winner ? 
+                (winner === 'draw' ? <div className="status">It's a draw!</div> : <div className="status">The winner is {winner}!</div>)
+                : <div className="status">Next Player: {player}</div> 
+            }
             <div className="board-row">
                 {renderSquare(0)}
                 {renderSquare(1)}
