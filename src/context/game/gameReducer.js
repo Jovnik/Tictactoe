@@ -52,7 +52,8 @@ export default (state, action) => {
                 player: action.payload.newPlayer,
                 squares: action.payload.revertedSquares,
                 stepNumber: action.payload.move,
-                history: action.payload.newHistory
+                history: action.payload.newHistory,
+                nTurns: action.payload.move
                 // squares: state.history[action.payload + 1]
             }
         case DISABLE_FIRST_TURN:
